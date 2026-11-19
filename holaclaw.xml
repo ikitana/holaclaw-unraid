@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>HolaClaw</Name>
+  <Repository>ghcr.io/ikitana/holaclaw:latest</Repository>
+  <Registry>https://github.com/ikitana/holaclaw/pkgs/container/holaclaw</Registry>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/ikitana/holaclaw-unraid/issues</Support>
+  <Project>https://holaclaw.ai</Project>
+  <ReadMe>https://github.com/ikitana/holaclaw-unraid#readme</ReadMe>
+  <Overview>HolaClaw is a small, stable agent harness. One binary runs an agent that talks on Telegram, Slack, Google Chat, WhatsApp or your terminal, uses tools behind a policy gate, remembers, runs scheduled tasks and drives a browser. It works with OpenRouter, OpenAI, a ChatGPT subscription, or any OpenAI-compatible endpoint, such as Ollama.[br][br]This image includes the browser (Chromium), which needs [b]--security-opt seccomp=unconfined[/b] in Extra Parameters for Chromium's own sandbox. Without the browser, install HolaClaw-Slim instead.[br][br][b]First start.[/b] HolaClaw waits for a provider. Open the container's console and run:[br][code]holaclaw init --provider openrouter --token-file /etc/holaclaw-secrets/token[/code][br]It asks for the API key and starts the daemon a few seconds later. Other providers: [b]openai[/b], [b]openai-codex[/b] (a ChatGPT subscription; then run [b]holaclaw login codex[/b]) and [b]openai-compat[/b] with [b]--base-url[/b] and [b]--model[/b] (Ollama on this server: [b]--base-url http://host.docker.internal:11434/v1[/b]).[br]Then run [b]holaclaw check[/b] and [b]holaclaw chat[/b].</Overview>
+  <Category>AI: Productivity: Tools:</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/ikitana/holaclaw-unraid/main/holaclaw.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/ikitana/holaclaw-unraid/main/assets/icon-light.png</Icon>
+  <ExtraParams>--security-opt seccomp=unconfined --add-host host.docker.internal:host-gateway</ExtraParams>
+  <PostArgs/>
+  <Requires>After the first start, run [b]holaclaw init --provider ... --token-file /etc/holaclaw-secrets/token[/b] in the container's console: HolaClaw waits for a provider until then.</Requires>
+  <Config Name="Control API port" Target="8484" Default="8484" Mode="tcp" Description="HolaClaw's Control API, for the apps and scripts. Every client needs a sign-in or the owner's admin token. Over plain HTTP: keep it on your LAN, and put a reverse proxy with TLS in front of it to reach it from anywhere else." Type="Port" Display="always" Required="true" Mask="false">8484</Config>
+  <Config Name="Config" Target="/etc/holaclaw" Default="/mnt/user/appdata/holaclaw/config" Mode="rw" Description="config.toml, the agents and channels.toml. A folder only HolaClaw uses: the container changes the owner of its files on every start." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/holaclaw/config</Config>
+  <Config Name="Secrets" Target="/etc/holaclaw-secrets" Default="/mnt/user/appdata/holaclaw/secrets" Mode="rw" Description="auth.toml (API keys and sign-in tokens) and the owner's admin token. A folder only HolaClaw uses: the container changes the owner of its files on every start." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/holaclaw/secrets</Config>
+  <Config Name="Data" Target="/var/lib/holaclaw" Default="/mnt/user/appdata/holaclaw/data" Mode="rw" Description="The database, the blobs and the daemon's backups. A folder only HolaClaw uses: the container changes the owner of its files on every start." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/holaclaw/data</Config>
+  <Config Name="Public URL" Target="HOLACLAW_PUBLIC_URL" Default="" Mode="" Description="Optional. The address devices use to reach HolaClaw, such as http://tower.local:8484 or https://claw.example. With it, pairing a device shows a link and a QR code; without it, only a code." Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Browser" Target="HOLACLAW_BROWSER_ENABLED" Default="true|false" Mode="" Description="Lets the agent open web pages in Chromium. Needs --security-opt seccomp=unconfined in Extra Parameters." Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+</Container>

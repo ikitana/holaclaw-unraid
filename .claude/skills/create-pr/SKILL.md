@@ -52,7 +52,7 @@ git diff --stat origin/main...HEAD
 On the commit that will be pushed, when it touches the template:
 
 ```sh
-nix develop -c xmllint --noout holaclaw.xml
+nix develop -c xmllint --noout holaclaw*.xml
 ```
 
 Then check that the template still matches HolaClaw's container guide (image, tags, volumes, port, variables, `ExtraParams`), as `AGENTS.md` lists.
@@ -80,7 +80,7 @@ Closes #N
 
 ## Testing
 
-- `nix develop -c xmllint --noout holaclaw.xml`: passes | fails: <what> | not run: <reason>
+- `nix develop -c xmllint --noout holaclaw*.xml`: passes | fails: <what> | not run: <reason>
 - Host test: <Unraid version, image tag, what was checked> | not run: <reason>
 - Manual checks of documented commands, if any.
 

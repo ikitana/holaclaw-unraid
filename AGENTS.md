@@ -7,10 +7,13 @@ it runs the published image `ghcr.io/ikitana/holaclaw`.
 
 ## Scope and layout
 
-- `holaclaw.xml`: the Unraid template (`<Container version="2">`). It maps the
-  image's ports, volumes and environment variables to Unraid's `Path`, `Port`
-  and `Variable` entries, and sets `ExtraParams`, `WebUI`, `Icon`, `Support`
-  and `Overview`.
+- `holaclaw.xml` and `holaclaw-slim.xml`: the Unraid templates
+  (`<Container version="2">`) for the `latest` and `slim` images. They map
+  the image's ports, volumes and environment variables to Unraid's `Path`,
+  `Port` and `Variable` entries, and set `ExtraParams`, `Icon`, `Support`,
+  `Overview` (with the first-start steps) and `Requires`. They differ only
+  where the browser does: keep the rest identical.
+- `assets/`: the icons, from HolaClaw.
 - `README.md`: install from CA or by template URL, first `init`, upgrades,
   backups and troubleshooting, written for an Unraid user.
 - `docs/`: longer guides, when the README is not enough. They describe the
@@ -42,8 +45,8 @@ same change.
 
 - Run everything through the dev shell: `nix develop -c <cmd>` (ignore the
   "Git tree is dirty" warning). It has `xmllint`, the Docker client and `gh`.
-- There is nothing to build. Check the template is well-formed XML:
-  `nix develop -c xmllint --noout holaclaw.xml`.
+- There is nothing to build. Check the templates are well-formed XML:
+  `nix develop -c xmllint --noout holaclaw*.xml`.
 - Test every template change on a host: the `docker run` that Unraid
   generates from the template must start the container, pass
   `docker exec holaclaw holaclaw check`, and survive a restart and an image
