@@ -40,8 +40,10 @@ same change.
 
 ## Building and testing
 
+- Run everything through the dev shell: `nix develop -c <cmd>` (ignore the
+  "Git tree is dirty" warning). It has `xmllint`, the Docker client and `gh`.
 - There is nothing to build. Check the template is well-formed XML:
-  `xmllint --noout holaclaw.xml`.
+  `nix develop -c xmllint --noout holaclaw.xml`.
 - Test every template change on a host: the `docker run` that Unraid
   generates from the template must start the container, pass
   `docker exec holaclaw holaclaw check`, and survive a restart and an image
