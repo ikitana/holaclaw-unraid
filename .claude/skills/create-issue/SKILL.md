@@ -17,7 +17,7 @@ There are three shapes:
 
 ## 1. Gather
 
-- Work out what the issue is about from the request and the conversation. Read `AGENTS.md`, the template (`holaclaw.xml`), the `README.md` or the `docs/` page involved so the issue names real template fields, paths, ports and variables. Don't invent any.
+- Work out what the issue is about from the request and the conversation. Read `AGENTS.md`, the templates (`holaclaw.xml`, `holaclaw-slim.xml`), the `README.md` or the `docs/` page involved so the issue names real template fields, paths, ports and variables. Don't invent any.
 - When the issue is about how the container behaves, check HolaClaw's own container guide (`docs/deployments/container.md` in the HolaClaw repository). If the problem is in HolaClaw or its image rather than in the template or the docs, say so: it belongs in the HolaClaw tracker, not here.
 - Check for a duplicate: `gh issue list --state all --search "<key words>" --limit 10`. If one matches, show it and ask before going on.
 - For a sub-issue, read the umbrella first (`gh issue view <N>`): its context, its decisions and its existing sub-issues. The new issue must fit them and not repeat them.
