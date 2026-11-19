@@ -37,10 +37,9 @@ builds or changes it. There are two; install one of them:
 
 ## Install
 
-### 1. Add the template
+### 1. Download the template
 
-Until HolaClaw is in Community Applications, add the template by hand. In
-Unraid's terminal (**>_** in the top bar), for **HolaClaw**:
+In Unraid's terminal (**>_** in the top bar), for **HolaClaw**:
 
 ```
 curl -fsSL -o /boot/config/plugins/dockerMan/templates-user/my-HolaClaw.xml \
@@ -54,60 +53,40 @@ curl -fsSL -o /boot/config/plugins/dockerMan/templates-user/my-HolaClaw-Slim.xml
   https://raw.githubusercontent.com/ikitana/holaclaw-unraid/main/holaclaw-slim.xml
 ```
 
-Then go to **Docker → Add Container**, and pick it under **Template**.
-
 ### 2. Create the container
 
-The defaults work as they are: review them (see [the template](#the-template))
-and click **Apply**. Unraid pulls the image and starts the container.
-
-The container starts with no provider and waits for you, so its log says:
-
-```
-holaclaw: no provider yet; waiting for `holaclaw init --provider ...` in this container
-```
+Go to **Docker → Add Container**, pick the template under **Template**, and
+click **Apply**. The defaults work as they are.
 
 ### 3. Initialise
 
-Open the container's console (click its icon → **Console**) and run `init`
-for the provider you have. It asks for the API key without echo, creates the
-owner, and writes an admin token to the secrets folder. The daemon starts by
-itself a few seconds later.
+Open the container's console (its icon → **Console**) and run `init` with your
+provider. It asks for the API key and starts HolaClaw:
 
 ```
 holaclaw init --provider openrouter --token-file /etc/holaclaw-secrets/token
 ```
 
-| Provider | `--provider` | Notes |
-|---|---|---|
-| OpenRouter | `openrouter` | asks for the API key |
-| OpenAI | `openai` | asks for the API key |
-| A ChatGPT subscription | `openai-codex` | then run `holaclaw login codex` to sign in |
-| Ollama or any OpenAI-compatible endpoint | `openai-compat` | add `--base-url` and `--model` (below) |
+| Provider | `--provider` |
+|---|---|
+| OpenRouter | `openrouter` |
+| OpenAI | `openai` |
+| A ChatGPT subscription | `openai-codex`, then `holaclaw login codex` |
+| Ollama or another OpenAI-compatible endpoint | `openai-compat --base-url <url> --model <id>` |
 
-For Ollama on the same Unraid server, the container reaches the host at
-`host.docker.internal`, and Ollama must listen beyond loopback
-(`OLLAMA_HOST=0.0.0.0`):
+For Ollama on the same server, use `--base-url http://host.docker.internal:11434/v1`,
+and make Ollama listen beyond loopback (`OLLAMA_HOST=0.0.0.0`).
 
-```
-holaclaw init --provider openai-compat \
-  --base-url http://host.docker.internal:11434/v1 --model gemma4:e2b
-```
-
-### 4. Check it and chat
+### 4. Chat
 
 ```
 holaclaw check
 holaclaw chat
 ```
 
-From the Unraid terminal instead of the container's console, prefix every
-command with `docker exec -it` and the container's name, as in
-`docker exec -it HolaClaw holaclaw chat` (or `HolaClaw-Slim`).
-
-Then go on with HolaClaw's
-[Getting started](https://github.com/ikitana/holaclaw/blob/main/docs/getting-started.md):
-change the model, pair a device, add a chat app.
+Next, follow HolaClaw's
+[Getting started](https://github.com/ikitana/holaclaw/blob/main/docs/getting-started.md)
+to change the model, pair a device or add a chat app.
 
 ## The template
 
